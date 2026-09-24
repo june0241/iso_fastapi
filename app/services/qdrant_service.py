@@ -193,14 +193,34 @@ class QdrantService:
             if must_conditions:
                 qdrant_filter = rest_models.Filter(must=must_conditions)
 
-        search_results = self.client.search(
-            collection_name=self.collection_name,
-            query_vector=query_vector,
-            limit=top_k,
-            score_threshold=score_threshold,
-            query_filter=qdrant_filter,
-            with_payload=True
-        )
+        if hasattr(self.client, "query_points"):
+            response = self.client.query_points(
+                collection_name=self.collection_name,
+                query=query_vector,
+                limit=top_k,
+                score_threshold=score_threshold,
+                query_filter=qdrant_filter,
+                with_payload=True,
+            )
+            search_results = response.points
+        elif hasattr(self.client, "search"):
+            search_results = self.client.search(
+                collection_name=self.collection_name,
+                query_vector=query_vector,
+                limit=top_k,
+                score_threshold=score_threshold,
+                query_filter=qdrant_filter,
+                with_payload=True,
+            )
+        else:
+            search_results = self.client.search_points(
+                collection_name=self.collection_name,
+                vector=query_vector,
+                limit=top_k,
+                score_threshold=score_threshold,
+                filter=qdrant_filter,
+                with_payload=True,
+            )
 
         results: List[IsoSearchResultItem] = []
         for hit in search_results:
