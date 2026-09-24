@@ -6,7 +6,7 @@ class Settings(BaseSettings):
     PROJECT_NAME: str = "Odoo ISO Reference Embedding Service"
     API_V1_STR: str = "/api/v1"
     HOST: str = "0.0.0.0"
-    PORT: int = 8000
+    PORT: int = 14251
     DEBUG: bool = True
 
     # Qdrant Settings

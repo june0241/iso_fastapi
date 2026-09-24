@@ -8,7 +8,7 @@ Group=ubuntu
 WorkingDirectory=/var/www/iso_fastapi
 Environment="PATH=/var/www/iso_fastapi/venv/bin"
 EnvironmentFile=/var/www/iso_fastapi/.env
-ExecStart=/var/www/iso_fastapi/venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 2
+ExecStart=/var/www/iso_fastapi/venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 14251 --workers 2
 
 Restart=always
 RestartSec=5
