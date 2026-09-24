@@ -122,12 +122,27 @@ Interactive API docs: `http://<SERVER_IP>:8000/docs`
 
 ### 1. Health Check
 ```bash
-curl -X GET http://localhost:8000/health
+curl -X GET http://localhost:14251/health
 ```
 
-### 2. Bulk Ingest Sample ISO Facts
+### 2. Upload & Ingest ISO PDF (PyMuPDF + Gemma3:12b + Qdrant)
 ```bash
-curl -X POST http://localhost:8000/api/v1/iso/embed/bulk \
+curl -X POST http://localhost:14251/api/v1/iso/upload/pdf \
+  -F "file=@/path/to/ISO_9001_Quality_Manual.pdf" \
+  -F "default_iso_standard=ISO 9001:2015" \
+  -F "department_or_owner=Quality Assurance"
+```
+
+### 3. Dry-Run / Preview PDF Extraction (Without Qdrant Saving)
+```bash
+curl -X POST http://localhost:14251/api/v1/iso/parse/pdf-preview \
+  -F "file=@/path/to/ISO_9001_Quality_Manual.pdf" \
+  -F "default_iso_standard=ISO 9001:2015"
+```
+
+### 4. Bulk Ingest Pre-Structured ISO Facts (JSON)
+```bash
+curl -X POST http://localhost:14251/api/v1/iso/embed/bulk \
   -H "Content-Type: application/json" \
   -d @data/sample_iso_facts.json
 ```

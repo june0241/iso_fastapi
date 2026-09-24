@@ -20,6 +20,18 @@ class Settings(BaseSettings):
     EMBEDDING_MODEL_NAME: str = "BAAI/bge-small-en-v1.5"
     EMBEDDING_VECTOR_SIZE: int = 384
 
+    # LLM Settings (Ollama with Gemma3:12b)
+    OLLAMA_HOST: str = "http://localhost:11434"
+    LLM_MODEL: str = "gemma3:12b"
+    EXTRACTION_PASSES: int = 1
+    LLM_TEMPERATURE: float = 0.1
+
+    # PDF Layout & Windowing Settings
+    MIN_PAGE_TEXT_CHARS: int = 40
+    IMAGE_AREA_RATIO: float = 0.80
+    OCR_DPI: int = 200
+    MAX_WINDOW_CHARS: int = 1800
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",

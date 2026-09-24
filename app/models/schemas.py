@@ -94,6 +94,23 @@ class IngestionResponse(BaseModel):
     results: List[IngestionResultItem]
 
 
+class PdfIngestionResponse(BaseModel):
+    status: str
+    filename: str
+    pages_parsed: int
+    total_facts_extracted: int
+    total_indexed: int
+    results: List[IngestionResultItem]
+
+
+class PdfPreviewResponse(BaseModel):
+    status: str
+    filename: str
+    pages_parsed: int
+    total_facts_extracted: int
+    facts: List[IsoFactCreate]
+
+
 class IsoSearchFilter(BaseModel):
     """Metadata filter criteria for semantic search queries."""
     iso_standard: Optional[str] = Field(None, example="ISO 9001:2015")
