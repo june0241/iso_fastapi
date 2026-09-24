@@ -6,7 +6,7 @@ After=network.target
 Type=simple
 User=root
 WorkingDirectory=/opt/iso_fastapi/iso_fastapi
-Environment="PATH=/opt/iso_fastapi/venv/bin:/opt/iso_fastapi/iso_fastapi/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+Environment="PATH=/opt/iso_fastapi/venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 EnvironmentFile=-/opt/iso_fastapi/iso_fastapi/.env
 ExecStart=/opt/iso_fastapi/venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 14251 --workers 2
 
