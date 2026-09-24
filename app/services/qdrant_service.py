@@ -225,11 +225,15 @@ class QdrantService:
         """Get collection metrics and counts."""
         self.ensure_collection()
         info = self.client.get_collection(collection_name=self.collection_name)
+        points_count = getattr(info, "points_count", 0) or 0
+        vectors_count = getattr(info, "indexed_vectors_count", getattr(info, "vectors_count", points_count)) or points_count
+        status_val = info.status.name if hasattr(info.status, "name") else str(info.status)
+
         return CollectionStatsResponse(
             collection_name=self.collection_name,
-            vectors_count=info.vectors_count or 0,
-            points_count=info.points_count or 0,
-            status=info.status.name if hasattr(info.status, "name") else str(info.status),
+            vectors_count=vectors_count,
+            points_count=points_count,
+            status=status_val,
             vector_dimension=settings.EMBEDDING_VECTOR_SIZE,
         )
 
