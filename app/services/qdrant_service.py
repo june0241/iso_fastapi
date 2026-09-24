@@ -18,16 +18,20 @@ class QdrantService:
     """Service to manage Qdrant collections, upserts, and filtered vector search."""
 
     def __init__(self):
-        if settings.QDRANT_URL:
+        if settings.QDRANT_URL and settings.QDRANT_URL.strip():
             self.client = QdrantClient(
-                url=settings.QDRANT_URL,
-                api_key=settings.QDRANT_API_KEY,
+                url=settings.QDRANT_URL.strip(),
+                api_key=settings.QDRANT_API_KEY or None,
+                https=settings.QDRANT_URL.strip().startswith("https"),
             )
         else:
             self.client = QdrantClient(
                 host=settings.QDRANT_HOST,
                 port=settings.QDRANT_PORT,
-                api_key=settings.QDRANT_API_KEY,
+                https=False,
+                prefer_grpc=False,
+                api_key=settings.QDRANT_API_KEY or None,
+                check_compatibility=False,
             )
         self.collection_name = settings.QDRANT_COLLECTION_NAME
 
